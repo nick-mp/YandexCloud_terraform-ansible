@@ -7,9 +7,14 @@ terraform {
   required_version = ">= 0.13"
 }
 
-provider "yandex" {
-  token     = var.token #секретные данные должны быть в сохранности!! Никогда не выкладывайте токен в публичный доступ.
+locals {
   cloud_id  = "aje789a9p2bcauis64hl"
   folder_id = "b1g5n8seedm7iub1qbob"
+}
+
+provider "yandex" {
+  cloud_id  = local.cloud_id
+  folder_id = local.folder_id
   zone      = "ru-central1-a"
+  token     = var.token
 }

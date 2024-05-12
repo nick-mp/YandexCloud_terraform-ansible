@@ -1,5 +1,11 @@
 variable "token" {
-  type = string
+  type        = string
   description = "ID Yandex Cloud"
-  sensitive = true
+  sensitive   = true
 }
+
+# variable "ssh" {
+#   type        = string
+#   description = "ssh key value"
+#   sensitive   = true
+# }

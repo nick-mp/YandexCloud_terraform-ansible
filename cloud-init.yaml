@@ -1,0 +1,22 @@
+#cloud-config
+datasource:
+  Ec2:
+    strict_id: false
+ssh_pwauth: no
+users:
+  - name: user
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtsn/+Ro3d2XCiARxQV92IOQQYzoZGEtnpZIEBVzvtC+l5DvNndWgH10qOprRUQxXD4+BfqC+33TvZw83vrq9l6tkOUzNkAUOWr9n7/oqZwDJBc1bx99t3vAEWJPzAhWoKG5kOrGfqLyelcwWVMSIYuRnrAaGvBevxHiqI4JFYojoO8PWmmdTwcPr+KE4mXjAEFgFn7jnMR6jgAnqj2t6HKTgA270ByrmT2qzdrRiDlXOg1LO04DcZCr5b/mqa9/L6Gf+DdxZt+1qBxA9YclFMsDOBH6GiLzB/aG6dPIuI6E4G6Teug5UE/xxR+IGjZ8d4o/nHL6tisJQDAJV3/o0zewz3L9PA87LYL5XlV37qbLggCXbkpVJxq1NMlLZnkNbaEK1jzt766kojTXrE3YyCiQsFBsH9Sq1+CDBcJUtttT84BhxHLy36Sfui1fJLOelXiPEQGwtWvxXYqI119cTyyBTfB/x7fMwzzW5ke/gMfrbjYO8qW50Q91ssf5fEu7k= Kim@DESKTOP-JL48A07
+
+  - name: ansible
+    gecos: Ansible User
+    shell: /bin/bash
+    groups: users,admin,wheel
+    sudo: ALL=(ALL) NOPASSWD:ALL
+
+package_update: true
+packages:
+  - git
+  - python3-pip 

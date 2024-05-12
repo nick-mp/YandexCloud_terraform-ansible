@@ -1,12 +1,8 @@
-data "template_file" users {
-  template = file("./cloud.conf.yaml")
-}
-
 resource "yandex_compute_disk" "test1" {
-  name = "test1"
-  type = "network-hdd"
-  size = 50
-  zone = "ru-central1-a"
+  name     = "test1"
+  type     = "network-hdd"
+  size     = 10
+  zone     = "ru-central1-a"
   image_id = "fd88m3uah9t47loeseir"
 
   labels = {
@@ -21,7 +17,7 @@ resource "yandex_vpc_network" "lab-net" {
 resource "yandex_vpc_subnet" "lab-subnet-a" {
   v4_cidr_blocks = ["192.168.10.0/24"]
   zone           = "ru-central1-a"
-  network_id     = "${yandex_vpc_network.lab-net.id}"
+  network_id     = yandex_vpc_network.lab-net.id
 }
 
 resource "yandex_vpc_address" "addr" {
@@ -36,11 +32,11 @@ resource "yandex_compute_instance" "vm-1" {
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
 
-  
+
   resources {
-    cores  = 2
-    memory = 2
-    core_fraction = 20
+    cores         = 2
+    memory        = 1
+    core_fraction = 5
   }
 
   boot_disk {
@@ -53,9 +49,10 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    user-data = data.template_file.users.rendered
+    user-data = "${file("cloud-init.yaml")}"
   }
-scheduling_policy {
-  preemptible = true
-}
+  
+  scheduling_policy {
+    preemptible = true
+  }
 }
